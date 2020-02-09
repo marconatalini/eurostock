@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eurostock - immagini{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5 justify-content-center">
+        <form class="form mt-5" method="get">
+            <div class="row m-0">
+                <div class="form-group">
+                    <label for="uploadFromDate">DA </label>
+                    <input type="date" class="form-control" name="uploadFromDate" id="uploadFromDate" value="">
+                </div>
+                <div class="form-group">
+                    <label for="uploadToDate">A </label>
+                    <input type="date" class="form-control" name="uploadToDate" id="uploadToDate"
+                           value="{{ date()|date("Y-m-d") }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="queryString">Testo ricerca </label>
+                <input type="text" class="form-control" name="queryString" id="queryString"
+                       placeholder="Cerca parole nelle descrizioni, tag, categorie e altro..">
+            </div>
+            <button type="submit" class="btn btn-primary">Cerca</button>
+        </form>
+    </div>
+
+{% endblock %}

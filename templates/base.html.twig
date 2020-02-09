@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Stock photo aziendali">
+    <meta name="author" content="Marco Natalini (c) 2020">
+    <title>{% block title %}Eurostock{% endblock %}</title>
+    {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+</head>
+<body>
+<header>
+    <div class="collapse" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">Europrofili group S.p.A.</h4>
+                    <p class="text-muted">Sito intranet realizzato da Marco Natalini per la roccolta e condivisione
+                        di immagini e documenti di interesse aziendale comune. Per informazioni, suggerimenti,
+                        estensioni
+                        o per riportare un malfunzionamento, chiamatemi o scrivetemi.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Contact</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="mailto:marco.natalini@europrofiligroup.it" class="text-white">marco.natalini_at_europrofiligroup.it</a>
+                        </li>
+                        <li><a href="#" class="text-white">telefono int. 156</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <a class="navbar-brand" href="{{ path('home') }}"></a>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item mr-2">
+                <a class="nav-link" href="{{ path('image_index') }}">Cerca <span class="sr-only">(current)</span></a>
+            </li>
+            {{ render(controller('App\\Controller\\DefaultController::categoryList')) }}
+        </ul>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+</header>
+{% block body %}{% endblock %}
+{% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+</body>
 </html>

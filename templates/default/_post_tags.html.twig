@@ -1,0 +1,11 @@
+{% if not image.tags.empty %}
+    <p class="post-tags">
+        {% for tag in image.tags %}
+            <a href="{{ path('image_index', {'queryString': tag.name}) }}"
+               class="label label-default">
+                <i class="fa fa-tag"></i> {{ tag.name }}
+            </a>
+        {% endfor %}
+    </p>
+{% endif %}
+

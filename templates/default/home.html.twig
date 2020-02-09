@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eurostock Homepage{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+
+{% block body %}
+    <main role="main">
+        <section class="my-5 text-center">
+            <div class="container">
+                <h1>Europrofili PHOTOs!</h1>
+                <p class="lead text-muted">Raccolta di foto e documenti realizzati con i dispositivi collegati alla rete
+                    interna.
+                    Lavorazioni, imballaggi, esecuzione prodotti e qualsiasi immagine aziendale di interesse comune.</p>
+                <p>
+                    <a href="{{ path('image_upload') }}" class="btn btn-primary my-2">Nuova immagine</a>
+                    <a href="{{ path('image_index') }}" class="btn btn-secondary my-2">Cerca</a>
+                </p>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <h3 class="text-dark">Ultime registrazioni</h3>
+                <div class="row">
+                    {{ include('image/_image_card_layout.html.twig', {images : lasts}) }}
+                </div>
+
+                <h3 class="text-dark">I più visti</h3>
+                <div class="row">
+                    {{ include('image/_image_card_layout.html.twig', {images : mostViewed}) }}
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    {{ include('default/_image_zoom.html.twig') }}
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Torna su</a>
+            </p>
+            <p>Sito realizzato da Marco Natalini &copy; 2020</p>
+            <p>Cerchi i nostri prodotti? Visita <a href="http://europrofiligroup.it/" target="_blank">europrofiligroup.it</a>
+                o avventurati nell'immenso mondo del \\serverUT</p>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}

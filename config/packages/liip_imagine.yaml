@@ -1,0 +1,50 @@
+liip_imagine:
+
+    resolvers:
+        default:
+            web_path:
+                web_root: '%kernel.project_dir%/public'
+                cache_prefix: 'media/cache'
+
+    loaders:
+        default:
+            filesystem:
+                data_root: '%kernel.project_dir%/public'
+
+    driver:               gd
+    cache:                default
+    data_loader:          default
+    default_image:        null
+    controller:
+        filter_action:         liip_imagine.controller:filterAction
+        filter_runtime_action: liip_imagine.controller:filterRuntimeAction
+    filter_sets:
+
+        # Prototype
+        name:
+            quality:              100
+            jpeg_quality:         ~
+            png_compression_level:  ~
+            png_compression_filter: ~
+            animated:             false
+            format:               ~
+            cache:                ~
+            data_loader:          ~
+            default_image:        null
+            filters:
+                # Prototype
+                name:                 []
+
+            post_processors:
+                # Prototype
+                name:                 []
+
+        # Prototype
+        homepage_thumb:
+            quality:              100
+            cache:                default
+            filters:
+                # Prototype
+                thumbnail: {size: [180, 180], mode: outbound}
+                background: {size: [182, 182], position: center, color: '#ffffff'}
+

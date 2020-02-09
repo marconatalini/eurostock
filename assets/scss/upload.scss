@@ -1,0 +1,24 @@
+//@import "~bootswatch/dist/superhero/variables";
+@import "bootstrap-tagsinput.scss";
+
+.input-group {
+  flex-wrap: nowrap;
+}
+
+.custom-file-label {
+  border: none;
+  height: inherit;
+}
+
+.custom-file-label::after {
+  height: inherit;
+}
+
+.bootstrap-tagsinput {
+  height: inherit;
+  border-radius: 0;
+}
+
+.bootstrap-tagsinput .tag {
+  border-radius: inherit;
+}

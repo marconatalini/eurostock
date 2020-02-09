@@ -1,0 +1,28 @@
+{% for image in images %}
+    <div class="col-md-3 slide">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0 text-dark">
+                <a href="{{ path('image_index', {queryString: image.category.name}) }}">{{ image.category }}</a>
+                <br>{{ image.uploadAt|date('d.m.y @ H:m') }}</p>
+            <span id="views_{{ image.id }}" class="badge badge-primary">{{ image.views }}</span>
+        </div>
+        <div class="card mb-4">
+            <div data-src="{{ vich_uploader_asset(image, 'imageFile') }}" data-image-id="{{ image.id }}" class="pop">
+                <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('homepage_thumb') }}"
+                     alt="{{ image.imageName }}" class="card-img-top"/>
+            </div>
+            <div class="card-body p-2">
+                {#<a href="{{ vich_uploader_asset(image, 'imageFile') }}">{{ image.imageName }}</a>#}
+                <p class="card-text">{{ image.description }}</p>
+                {{ include('default/_post_tags.html.twig') }}
+                {#<a href="{{ path('image_delete', {id: image.id}) }}" class="btn-primary"><i
+                            class="fas fa-trash"></i></a>#}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="w-100 text-center my-auto">
+        <h3>Nessuna immagine trovata.</h3>
+        <a href="{{ path('home') }}" class="btn btn-lg btn-secondary">Torna all'inizio</a>
+    </div>
+{% endfor %}

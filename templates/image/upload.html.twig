@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('upload') }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="col-md-8 mx-auto">
+        <h1>Invia immagine</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.imageFile) }}
+        {{ form_row(form.tags) }}
+        {{ form_row(form.description) }}
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-upload" aria-hidden="true"></i> Invia
+        </button>
+
+        <a href="{{ path('home') }}" class="btn btn-link">
+            <i class="fa fa-list-alt" aria-hidden="true"></i> Torna indietro
+        </a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('upload') }}
+{% endblock %}

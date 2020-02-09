@@ -1,0 +1,8 @@
+easy_admin:
+    entities:
+        # List the entity class name you want to manage
+        Category:
+            class: App\Entity\Category
+            label: Categorie
+            edit:
+                fields: ['name', 'description', 'days_before_delete']
