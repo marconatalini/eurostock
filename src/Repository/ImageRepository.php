@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -33,8 +34,7 @@ class ImageRepository extends ServiceEntityRepository
             ->orderBy('i.id', 'DESC')
             ->setMaxResults($number)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function findMostViewed(int $number)
@@ -43,12 +43,10 @@ class ImageRepository extends ServiceEntityRepository
             ->orderBy('i.views', 'DESC')
             ->setMaxResults($number)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-
-    public function findBySearchQuery(int $page = 1, string $rawQuery, string $uploadFromDate, string $uploadToDate, int $limit = Image::MAX_RESULT)
+    public function findBySearchQuery(int $page = 1, Array $tags = [], Category $category = null, string $rawQuery, string $uploadFromDate, string $uploadToDate, int $limit = Image::MAX_RESULT)
     {
 
         $query = $this->sanitizeSearchQuery($rawQuery);
@@ -63,39 +61,27 @@ class ImageRepository extends ServiceEntityRepository
             ->setParameter('upFrom', $uploadFromDate)
             ->setParameter('upTo', $uploadToDate . ' 23:59:59');
 
+
+        if ($tags !== []) {
+            foreach ($tags as $tag) {
+                $queryBuilder
+                    ->andWhere(':tag MEMBER OF i.tags')
+                    ->setParameter('tag', $tag);
+            }
+        }
+
+        if ($category) {
+            $queryBuilder
+                ->andWhere('i.category = :category')
+                ->setParameter('category', $category);
+        }
+
+
         if (\count($searchTerms) !== 0) {
             foreach ($searchTerms as $key => $term) {
-                $tagFound = false;
-                $categoryFound = false;
-
-                //controllo se si tratta di un TAG
-                if ($tag = $this->tagRepository->findOneBy(['name' => $term])){
-                    $tagFound = true;
-                    $queryBuilder
-                        ->andWhere(':tag MEMBER OF i.tags')
-                        ->setParameter('tag', $tag);
-                }
-
-                //controllo se si tratta di una categoria
-                if ($category = $this->categoryRepository->findOneBy(['name' => $term])){
-                    $categoryFound = true;
-                    $queryBuilder
-                        ->andWhere('i.category = :category')
-                        ->setParameter('category', $category);
-                }
-
-                if (!$tagFound || !$categoryFound){
-                    $queryBuilder
-                        ->orWhere('i.description LIKE :t_'.$key);
-                } else {
-                    $queryBuilder
-                        ->andWhere('i.description LIKE :t_'.$key);
-                }
                 $queryBuilder
-                    ->setParameter('t_'.$key, '%'.$term.'%')
-                ;
-
-
+                    ->andWhere('i.description LIKE :t_' . $key)
+                    ->setParameter('t_' . $key, '%' . $term . '%');
             }
         }
 
@@ -134,8 +120,7 @@ class ImageRepository extends ServiceEntityRepository
             ->innerJoin('i.category', 'c')
             ->where('i.uploadAt < DATE_ADD(CURRENT_DATE(), (-1 * c.days_before_delete), \'DAY\')')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

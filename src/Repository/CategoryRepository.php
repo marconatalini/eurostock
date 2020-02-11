@@ -22,7 +22,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function findDaysBeforeDelete()
     {
         return $this->createQueryBuilder('c')
-            ->select('c.id', 'c.days_before_delete')
+            ->select('c.id', 'c.days_before_delete', 'c.description')
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult()

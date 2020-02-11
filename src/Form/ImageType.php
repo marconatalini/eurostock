@@ -32,7 +32,7 @@ class ImageType extends AbstractType
                 'label' => 'Categoria',
                 'help' => 'La foto rimarrà disponibile per un certo numero di giorni',
                 'attr' => [
-                    'data-help-message' => $this->helpMessage()
+                    'data-help-message' => $this->helpMessage(),
                 ]
 
             ])
@@ -43,9 +43,11 @@ class ImageType extends AbstractType
             ])
             ->add('tags', TagsInputType::class, [
                 'required' => false,
+                'help' => 'Singoli termini per la ricerca, divisi da una virgola.'
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
+                'help' => 'Descrizione completa della foto, utile anche per una futura ricerca.'
             ])
         ;
     }

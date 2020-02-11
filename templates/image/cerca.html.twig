@@ -2,6 +2,18 @@
 
 {% block title %}Eurostock - immagini{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('search') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('upload') }}
+{% endblock %}
+
+
+
 {% block body %}
 
     <div class="container mt-5 justify-content-center">
@@ -18,10 +30,31 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="required" for="image_category">Categoria</label>
+                <select id="image_category" name="category" aria-describedby="image_category_help" class="form-control">
+                    <option value="" selected="selected">scegli una categoria</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="queryString">Testo ricerca </label>
                 <input type="text" class="form-control" name="queryString" id="queryString"
-                       placeholder="Cerca parole nelle descrizioni, tag, categorie e altro..">
+                       placeholder="Cerca parole nelle descrizioni">
             </div>
+
+            <div class="form-group">
+                <label for="image_tags">Tags</label>
+                <div class="input-group">
+                    <input type="text" name="tags" data-toggle="tagsinput" data-tags="{{ tags|json_encode }}"
+                           class="form-control">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-tags"></i></span>
+                    </div>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary">Cerca</button>
         </form>
     </div>

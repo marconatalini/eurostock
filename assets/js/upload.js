@@ -40,15 +40,16 @@ $('select#image_category').change(function () {
 
     let help_message = $('#image_category').data('help-message');
 
-    let days;
+    let days, descrizione;
     for (let i = 0; i < help_message.length; i++){
         let id = help_message[i].id;
         if (category == id){
             days = help_message[i].days_before_delete;
+            descrizione = help_message[i].description;
             break;
         }
     }
 
-    $('#image_category_help').html(`La foto sarà disponibile per ${days} giorni.`);
+    $('#image_category_help').html(`${descrizione}.\nLa foto sarà disponibile per ${days} giorni.`);
 
 });

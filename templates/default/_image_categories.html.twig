@@ -3,7 +3,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="dropdownCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorie</a>
         <div class="dropdown-menu" aria-labelledby="dropdownCategory">
             {% for category in categories %}
-                <a class="dropdown-item" href="{{ path('image_index', {queryString : category.name}) }}">{{ category }}</a>
+                <a class="dropdown-item" href="{{ path('image_index', {category : category.id}) }}">{{ category }}</a>
             {% endfor %}
         </div>
     </li>

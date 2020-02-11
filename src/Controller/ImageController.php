@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Image;
+use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Form\ImageType;
+use App\Repository\TagRepository;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager as LiipCacheManager;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper as UploaderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,22 +25,28 @@ class ImageController extends AbstractController
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="image_index")
      * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods={"GET"}, name="image_index_paginated")
      */
-    public function index(Request $request, int $page, ImageRepository $images)
+    public function index(Request $request, int $page, ImageRepository $images, TagRepository $tagRepository, CategoryRepository $categories)
     {
-        /*$tag = null;
-        if ($request->query->has('tag')) {
-            $tag = $tags->findOneBy(['name' => $request->query->get('tag')]);
+
+        if (0 === $request->query->count()) {
+            return $this->render('image/cerca.html.twig', [
+                'tags' => $tagRepository->findAll(),
+                'categories' => $categories->findAll(),
+            ]);
+        }
+
+
+        $tags = [];
+        if ($request->query->get('tags')) {
+            $searchTags = explode(',', $request->query->get('tags'));
+            foreach ($searchTags as $tagName){
+                $tags[] = $tagRepository->findOneBy(['name' => $tagName]);
+            }
         }
 
         $category = null;
         if ($request->query->has('category')) {
             $category = $categories->find($request->query->get('category'));
-        }
-
-        $latestImage = $images->findAllBy($page, $tag, $category);*/
-
-        if (0 === $request->query->count()) {
-            return $this->render('image/cerca.html.twig');
         }
 
         $rawQuery = $request->get("queryString", '');
@@ -52,7 +60,7 @@ class ImageController extends AbstractController
             $dateTo = date('Y-m-d', date_timestamp_get(new \DateTime('now')));
         }
 
-        $result = $images->findBySearchQuery($page, $rawQuery, $dateFrom, $dateTo);
+        $result = $images->findBySearchQuery($page, $tags, $category, $rawQuery, $dateFrom, $dateTo);
 
         return $this->render('image/index.html.twig', [
             'paginator' => $result,
