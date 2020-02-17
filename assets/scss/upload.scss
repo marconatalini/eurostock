@@ -8,15 +8,18 @@
 .custom-file-label {
   border: none;
   height: inherit;
+  left: inherit;
 }
 
 .custom-file-label::after {
   height: inherit;
+  content: "Scegli";
+  margin-bottom: 2px;
 }
 
 .bootstrap-tagsinput {
   height: inherit;
-  border-radius: 0;
+  border: 1px solid #ced4da;
 }
 
 .bootstrap-tagsinput .tag {

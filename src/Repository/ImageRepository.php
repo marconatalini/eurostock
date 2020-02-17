@@ -63,10 +63,10 @@ class ImageRepository extends ServiceEntityRepository
 
 
         if ($tags !== []) {
-            foreach ($tags as $tag) {
+            foreach ($tags as $key => $term) {
                 $queryBuilder
-                    ->andWhere(':tag MEMBER OF i.tags')
-                    ->setParameter('tag', $tag);
+                    ->andWhere(':tag_' . $key . ' MEMBER OF i.tags')
+                    ->setParameter('tag_' . $key, $term);
             }
         }
 
