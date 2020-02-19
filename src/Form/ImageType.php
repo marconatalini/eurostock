@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ImageType extends AbstractType
 {
@@ -36,16 +37,21 @@ class ImageType extends AbstractType
                 ]
 
             ])
-            ->add('imageFile', FileType::class, [
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Immagine',
+                'allow_delete' => false,
+                'download_uri' => true,
+                'required' => $options['image_required'],
                 'attr' => [
                     'accept' => 'image/jpeg'
                 ]
             ])
             ->add('tags', TagsInputType::class, [
                 'required' => false,
-                'help' => 'Singoli termini per la ricerca, divisi da una virgola.'
+                'help' => 'Etichette per la ricerca, divisi da una virgola.'
             ])
             ->add('description', TextareaType::class, [
+                'label' => ' Descrizione',
                 'required' => false,
                 'help' => 'Descrizione completa della foto, utile anche per una futura ricerca.'
             ])
@@ -56,7 +62,12 @@ class ImageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
+            'image_required' => true,
         ]);
+
+        // you can also define the allowed types, allowed values and
+        // any other feature supported by the OptionsResolver component
+        $resolver->setAllowedTypes('image_required', 'bool');
     }
 
     private function helpMessage()

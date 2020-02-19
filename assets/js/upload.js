@@ -28,8 +28,8 @@ $(function() {
     }
 });
 
-$('#image_imageFile').change(function () {
-    console.log(this.value);
+$('#image_imageFile_file').change(function () {
+    // console.log(this.value);
     let fileName = this.value.split('\\').pop();
     $('.custom-file-label').text(fileName);
 });

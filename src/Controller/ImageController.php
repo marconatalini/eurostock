@@ -110,6 +110,31 @@ class ImageController extends AbstractController
     }
 
     /**
+     * @Route("/edit/{id}", name="image_edit")
+     */
+    public function edit(Request $request, Image $image)
+    {
+        $form = $this->createForm(ImageType::class, $image, ['image_required' => false]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+            $image = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($image);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('image/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+    /**
      * @Route("/search", methods={"GET"}, name="image_search")
      */
     public function search(Request $request, ImageRepository $repository)

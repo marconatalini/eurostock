@@ -12,11 +12,22 @@
                      alt="{{ image.imageName }}" class="card-img-top"/>
             </div>
             <div class="card-body p-2">
-                {#<a href="{{ vich_uploader_asset(image, 'imageFile') }}">{{ image.imageName }}</a>#}
                 <p class="card-text">{{ image.description }}</p>
                 {{ include('default/_post_tags.html.twig') }}
-                {#<a href="{{ path('image_delete', {id: image.id}) }}" class="btn-primary"><i
-                            class="fas fa-trash"></i></a>#}
+                {% if  date(image.uploadAt) > date('-2 days') %}
+
+                <div class="d-flex justify-content-end">
+                    <div class="btn-group">
+                        <a href="{{ vich_uploader_asset(image, 'imageFile') }}" class="btn btn-outline-secondary"><i
+                                    data-toggle="tooltip" title="download" class="fas fa-download"></i></a>
+                        <a href="{{ path('image_edit', {id: image.id}) }}" class="btn btn-outline-secondary"><i
+                                    data-toggle="tooltip" title="modifica" class="fas fa-edit"></i></a>
+                        <a href="{{ path('image_delete', {id: image.id}) }}" class="btn btn-outline-secondary"><i
+                                    data-toggle="tooltip" title="cancella" class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+
+                {% endif %}
             </div>
         </div>
     </div>

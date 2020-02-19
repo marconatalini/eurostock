@@ -30,11 +30,10 @@ class Image
      *
      * @Vich\UploadableField(mapping="image_images", fileNameProperty="imageName", size="imageSize")
      *
-     * @var File|null
      * @Assert\File(maxSize="3M",
      *     maxSizeMessage="Il file è troppo grande ({{ size }} {{ suffix }}). Massimo consentito: {{ limit }} {{ suffix }}.",
      *     mimeTypes={"image/jpeg"},
-     *     mimeTypesMessage="Il tipo di file non è corretto ({{ type }}). Puoi caricare solamente immagini {{ types }}."
+     *     mimeTypesMessage="Il tipo di file non è corretto ({{ type }}). Puoi caricare solamente immagini {{ types }}.",
      * )
      */
     private $imageFile;

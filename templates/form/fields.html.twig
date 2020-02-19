@@ -25,15 +25,18 @@
     </div>
 {% endblock %}
 
-{% block file_widget -%}
-    <{{ element|default('div') }} class="custom-file form-control">
-    {%- set type = type|default('file') -%}
-    {{- block('form_widget_simple') -}}
-    {%- set label_attr = label_attr|merge({ class: (label_attr.class|default('') ~ ' custom-file-label')|trim }) -%}
-    <label for="{{ form.vars.id }}" {% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
-        {%- if attr.placeholder is defined and attr.placeholder is not none -%}
-            {{- translation_domain is same as(false) ? attr.placeholder : attr.placeholder|trans({}, translation_domain) -}}
+{%- block vich_image_widget -%}
+    <div class="vich-image">
+        {{- form_widget(form.file) -}}
+        {%- if form.delete is defined -%}
+            {{- form_row(form.delete) -}}
         {%- endif -%}
-    </label>
-    </{{ element|default('div') }}>
-{% endblock %}
+
+        {%- if image_uri -%}
+            <a href="{{ asset_helper is same as(true) ? asset(image_uri) : image_uri }}"><img src="{{ (asset_helper is same as(true) ? asset(image_uri) : image_uri) | imagine_filter('homepage_thumb') }}" alt="" /></a>
+        {%- endif -%}
+        {%- if download_uri -%}
+            <a href="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
+        {%- endif -%}
+    </div>
+{%- endblock -%}
