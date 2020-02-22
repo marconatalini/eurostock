@@ -10,17 +10,6 @@ $(function() {
     // http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
     let $input = $('input[data-toggle="tagsinput"]');
 
-    let Name = "Unknown OS";
-    if (navigator.userAgent.indexOf("Win") !== -1) Name = "Windows OS";
-    if (navigator.userAgent.indexOf("Mac") !== -1) Name = "Macintosh";
-    if (navigator.userAgent.indexOf("Linux") !== -1) Name = "Linux OS";
-    if (navigator.userAgent.indexOf("Android") !== -1) Name = "Android OS";
-    if (navigator.userAgent.indexOf("like Mac") !== -1) Name = "iOS";
-
-    let keys = [13,188];
-
-    if (Name === "Android OS") keys.push(55);
-
     if ($input.length) {
         let source = new Bloodhound({
             local: $input.data('tags'),
@@ -36,7 +25,7 @@ $(function() {
                 name: 'tags',
                 source: source.ttAdapter()
             },
-            confirmKeys: keys
+            confirmKeys: [32,44]
         });
     }
 });

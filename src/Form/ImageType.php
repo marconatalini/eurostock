@@ -48,7 +48,7 @@ class ImageType extends AbstractType
             ])
             ->add('tags', TagsInputType::class, [
                 'required' => false,
-                'help' => 'Etichette per la ricerca, divisi da una virgola.'
+                'help' => 'Singole parole per la ricerca. Premi spazio per registrare il TAG.'
             ])
             ->add('description', TextareaType::class, [
                 'label' => ' Descrizione',
