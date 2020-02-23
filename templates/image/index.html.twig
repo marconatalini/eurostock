@@ -2,6 +2,8 @@
 
 {% block title %}Eurostock - immagini{% endblock %}
 
+{% block stylesheets %} {{ encore_entry_link_tags('app') }} {% endblock %}
+
 {% block body %}
 
     <div class="album py-5 bg-light">
@@ -14,6 +16,8 @@
     </div>
 
     {{ include('default/_image_zoom.html.twig') }}
+
+    <a href="{{ path('image_upload') }}" id="btn_upload" class="btn btn-primary"><i class="fas fa-plus"></i></a>
 
 {% endblock %}
 

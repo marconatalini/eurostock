@@ -18,7 +18,7 @@
 
                 <div class="d-flex justify-content-end">
                     <div class="btn-group">
-                        <a href="{{ vich_uploader_asset(image, 'imageFile') }}" class="btn btn-outline-secondary"><i
+                        <a href="{{ vich_uploader_asset(image, 'imageFile') }}" download="{{ image.imageName }}" class="btn btn-outline-secondary"><i
                                     data-toggle="tooltip" title="download" class="fas fa-download"></i></a>
                         <a href="{{ path('image_edit', {id: image.id}) }}" class="btn btn-outline-secondary"><i
                                     data-toggle="tooltip" title="modifica" class="fas fa-edit"></i></a>
