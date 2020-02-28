@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Image;
 use App\Repository\ImageRepository;
+use App\Repository\TagRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,13 +21,15 @@ class EurostockCleanCommand extends Command
     protected static $defaultName = 'eurostock:clean';
 
     private $images;
+    private $tags;
     private $cacheManager;
     private $uploaderBundle;
     private $objectManager;
 
-    public function __construct(ImageRepository $images, LiipCacheManager $cacheManager, UploaderHelper $uploaderBundle, EntityManagerInterface $objectManager)
+    public function __construct(ImageRepository $images, TagRepository $tags, LiipCacheManager $cacheManager, UploaderHelper $uploaderBundle, EntityManagerInterface $objectManager)
     {
         $this->images = $images;
+        $this->tags = $tags;
         $this->cacheManager = $cacheManager;
         $this->uploaderBundle = $uploaderBundle;
         $this->objectManager = $objectManager;
@@ -59,9 +62,14 @@ class EurostockCleanCommand extends Command
         }
 
         $count = 0;
+        $countTag = 0;
+
+        $deleted_tags = [];
 
         /** @var Image $image */
         foreach ($this->images->findImagesToDelete() as $image) {
+            $deleted_tags = array_merge($deleted_tags, $image->getTags()->toArray());
+
             $count ++;
             // get the UploaderHelper service...
             $resolvedPath = $this->uploaderBundle->asset($image, 'imageFile');
@@ -71,10 +79,25 @@ class EurostockCleanCommand extends Command
 
             $io->writeln($image->getCategory()->getName() .": ". $image->getImageName());
         }
-//        $objectManager->flush();
+        $this->objectManager->flush();
+
+        if (count(array_unique($deleted_tags)) > 0 ){
+            foreach ($deleted_tags as $tag){
+
+                if ($tag->getImages()->count()){
+                    $io->writeln('TAG non cancellabile: '. $tag);
+                } else {
+                    $io->writeln('Cancello TAG: '. $tag);
+                    $this->objectManager->remove($tag);
+                    $countTag ++;
+                }
+            }
+        }
+
+        $this->objectManager->flush();
 
         if ($count){
-            $io->success('Hai cancellato '. $count. ' immagini.');
+            $io->success('Hai cancellato '. $count. ' immagini e ' .$countTag. ' TAG');
         }
 
         return 0;

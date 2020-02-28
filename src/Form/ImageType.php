@@ -48,7 +48,7 @@ class ImageType extends AbstractType
             ])
             ->add('tags', TagsInputType::class, [
                 'required' => false,
-                'help' => 'Singole parole per la ricerca. Premi spazio per registrare il TAG.'
+                'help' => 'TAG di ricerca. Premi INVIO o tocca a destra del TAG per registrarlo.'
             ])
             ->add('description', TextareaType::class, [
                 'label' => ' Descrizione',

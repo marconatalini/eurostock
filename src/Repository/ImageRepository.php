@@ -5,6 +5,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Image;
+use App\Entity\Tag;
 use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -119,9 +120,11 @@ class ImageRepository extends ServiceEntityRepository
             ->addSelect('c')
             ->innerJoin('i.category', 'c')
             ->where('i.uploadAt < DATE_ADD(CURRENT_DATE(), (-1 * c.days_before_delete), \'DAY\')')
+            ->andWhere('c.safe = false')
             ->getQuery()
             ->getResult();
     }
+
 
     // /**
     //  * @return Image[] Returns an array of Image objects

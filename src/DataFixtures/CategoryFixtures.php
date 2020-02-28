@@ -13,13 +13,9 @@ class CategoryFixtures extends Fixture
     public function __construct()
     {
         $this->categories = [
-            'lavorazione',
-            'pacco',
-            'imballo',
-            'viv',
-            'prodotto',
-            'difetto',
-            'documento',
+            ['usa e getta', 'Foto di scambio, cancellate il giorno seguente', 1, false],
+            ['terzisti', 'Foto preparazione materiale, aggiungere un TAG con il nome fornitore o cliente', 20, false],
+            ['prodotti', 'Foto di prodotti realizzati', 999, true],
         ];
     }
 
@@ -30,7 +26,10 @@ class CategoryFixtures extends Fixture
 
         foreach ($this->categories as $category) {
             $record = new Category();
-            $record->setName($category);
+            $record->setName($category[0]);
+            $record->setDescription($category[1]);
+            $record->setDaysBeforeDelete($category[2]);
+            $record->setSafe($category[3]);
             $manager->persist($record);
         }
 

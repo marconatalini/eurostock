@@ -38,6 +38,11 @@ class Category
      */
     private $days_before_delete;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $safe;
+
 
     public function __toString()
     {
@@ -118,6 +123,18 @@ class Category
     public function setDaysBeforeDelete(int $days_before_delete): self
     {
         $this->days_before_delete = $days_before_delete;
+
+        return $this;
+    }
+
+    public function getSafe(): ?bool
+    {
+        return $this->safe;
+    }
+
+    public function setSafe(bool $safe): self
+    {
+        $this->safe = $safe;
 
         return $this;
     }

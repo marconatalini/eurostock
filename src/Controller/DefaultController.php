@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,7 +13,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ImageRepository $imageRepository)
+    public function index(ImageRepository $imageRepository, TagRepository $tags)
     {
         $images = $imageRepository->findLasts(4);
         $imagesMostViewed = $imageRepository->findMostViewed(4);

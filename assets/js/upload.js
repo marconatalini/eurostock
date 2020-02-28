@@ -18,6 +18,8 @@ $(function() {
         });
         source.initialize();
 
+        console.log($input, $input.val(), $input.data('tags'), source.ttAdapter());
+
         $input.tagsinput({
             trimValue: true,
             focusClass: 'focus',
@@ -25,8 +27,8 @@ $(function() {
                 name: 'tags',
                 source: source.ttAdapter()
             },
-            confirmKeys: [32,44]
         });
+
     }
 });
 
