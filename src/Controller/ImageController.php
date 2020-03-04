@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Image;
+use App\Entity\Tag;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Form\ImageType;
@@ -134,32 +135,6 @@ class ImageController extends AbstractController
 
     }
 
-    /**
-     * @Route("/search", methods={"GET"}, name="image_search")
-     */
-    public function search(Request $request, ImageRepository $repository)
-    {
-        $rawQuery = $request->get("queryString", '');
-        $dateFrom = $request->get("uploadFromDate", null);
-        if (!$dateFrom) {
-            $dateFrom = date('Y-m-d', date_timestamp_get(new \DateTime('-3  months')));
-        }
-
-        $dateTo = $request->get("uploadToDate", null);
-        if (!$dateTo) {
-            $dateTo = date('Y-m-d', date_timestamp_get(new \DateTime('now')));
-        }
-
-        $result = $repository->findBySearchQuery($rawQuery, $dateFrom, $dateTo);
-
-        if ($request->query->has('queryString')) {
-            return $this->render('image/index.html.twig', [
-                'paginator' => $result
-            ]);
-        }
-
-        return $this->render('image/cerca.html.twig');
-    }
 
     /**
      * @Route("/delete/{id}", name="image_delete")

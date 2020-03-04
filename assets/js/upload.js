@@ -2,35 +2,30 @@ import '../scss/upload.scss';
 
 import 'typeahead.js';
 import Bloodhound from 'bloodhound-js';
-import 'bootstrap-tagsinput';
+import '../js/bootstrap-tagsinput'
+
 
 $(function() {
 
-    // Bootstrap-tagsinput initialization
-    // http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
-    let $input = $('input[data-toggle="tagsinput"]');
+    let $input = $('#image_tags');
 
-    if ($input.length) {
-        let source = new Bloodhound({
-            local: $input.data('tags'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            datumTokenizer: Bloodhound.tokenizers.whitespace
-        });
-        source.initialize();
+    let engine = new Bloodhound({
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        local: $input.data('tags')
+    });
+    engine.initialize();
 
-        console.log($input, $input.val(), $input.data('tags'), source.ttAdapter());
-
-        $input.tagsinput({
-            trimValue: true,
-            focusClass: 'focus',
-            typeaheadjs: {
-                name: 'tags',
-                source: source.ttAdapter()
-            },
-        });
-
-    }
+    $input.tagsinput({
+        trimValue: true,
+        focusClass: 'focus',
+        typeaheadjs: {
+            name: 'tags',
+            source: engine.ttAdapter()
+        },
+    });
 });
+
 
 $('#image_imageFile_file').change(function () {
     // console.log(this.value);
