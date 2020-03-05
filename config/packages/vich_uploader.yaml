@@ -6,3 +6,8 @@ vich_uploader:
             uri_prefix: /images
             upload_destination: '%kernel.project_dir%/public/images'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            directory_namer:
+                service: Vich\UploaderBundle\Naming\CurrentDateTimeDirectoryNamer
+                options:
+                    date_time_format: 'Y/m' # will create directory "2018/23/09" for curent date "2018-09-23"
+                    date_time_property: uploadAt # see above example
