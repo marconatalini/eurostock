@@ -1,17 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Eurostock - immagini{% endblock %}
+{% block title %}Eurostock - ricerca immagini{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {#{{ encore_entry_script_tags('search') }}#}
+    {{ encore_entry_script_tags('upload') }}
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {#{{ encore_entry_link_tags('upload') }}#}
-{% endblock %}
-
 
 
 {% block body %}
@@ -19,7 +13,7 @@
     <div class="container mt-5 justify-content-center">
         <form class="form mt-5" method="get">
             <div class="row m-0">
-                <div class="form-group">
+                <div class="form-group mr-2">
                     <label for="uploadFromDate">DA </label>
                     <input type="date" class="form-control" name="uploadFromDate" id="uploadFromDate" value="">
                 </div>
@@ -47,7 +41,7 @@
             <div class="form-group">
                 <label for="image_tags">Tags</label>
                 <div class="input-group">
-                    <input type="text" name="tags" data-toggle="tagsinput" data-tags="{{ tags|json_encode }}"
+                    <input id="image_tags" type="text" name="tags" data-role="tagsinput" data-tags="{{ tags|json_encode }}"
                            class="form-control">
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fa fa-tags"></i></span>
@@ -59,4 +53,9 @@
         </form>
     </div>
 
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('upload') }}
 {% endblock %}

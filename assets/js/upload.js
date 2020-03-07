@@ -27,8 +27,8 @@ $(function() {
 });
 
 
+//aggiungo il nome del file selezionato
 $('#image_imageFile_file').change(function () {
-    // console.log(this.value);
     let fileName = this.value.split('\\').pop();
     $('.custom-file-label').text(fileName);
 });
@@ -39,16 +39,21 @@ $('select#image_category').change(function () {
 
     let help_message = $('#image_category').data('help-message');
 
-    let days, descrizione;
+    let days, descrizione, safe;
     for (let i = 0; i < help_message.length; i++){
         let id = help_message[i].id;
         if (category == id){
             days = help_message[i].days_before_delete;
             descrizione = help_message[i].description;
+            safe = help_message[i].safe;
             break;
         }
     }
 
-    $('#image_category_help').html(`${descrizione}.\nLa foto sarà disponibile per ${days} giorni.`);
+    if (safe === true){
+        $('#image_category_help').html(`${descrizione}.\nLa foto sarà sempre disponibile.`);
+    } else {
+        $('#image_category_help').html(`${descrizione}.\nLa foto sarà disponibile per ${days} giorni.`);
+    }
 
 });

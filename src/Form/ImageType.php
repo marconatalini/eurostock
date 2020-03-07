@@ -31,7 +31,7 @@ class ImageType extends AbstractType
                 'class' => Category::class,
                 'placeholder' => 'scegli una categoria',
                 'label' => 'Categoria',
-                'help' => 'La foto rimarrà disponibile per un certo numero di giorni',
+                'help' => 'In base alla categoria scelta la foto resterà salvata per un certo numero di giorni',
                 'attr' => [
                     'data-help-message' => $this->helpMessage(),
                 ]
@@ -48,7 +48,7 @@ class ImageType extends AbstractType
             ])
             ->add('tags', TagsInputType::class, [
                 'required' => false,
-                'help' => 'TAG di ricerca. Premi INVIO o tocca a destra del TAG per registrarlo.'
+                'help' => 'TAG di ricerca. Un nome per filtrare i risultati.'
             ])
             ->add('description', TextareaType::class, [
                 'label' => ' Descrizione',
