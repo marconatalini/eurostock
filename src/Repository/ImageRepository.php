@@ -131,7 +131,7 @@ class ImageRepository extends ServiceEntityRepository
     //  */
     /*
     public function findByExampleField($value)
-    {
+    {0
         return $this->createQueryBuilder('i')
             ->andWhere('i.exampleField = :val')
             ->setParameter('val', $value)

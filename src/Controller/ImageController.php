@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\Tag;
 use App\Repository\CategoryRepository;
@@ -85,12 +86,24 @@ class ImageController extends AbstractController
 
     /**
      * @Route("/upload", name="image_upload")
+     * @Route("/upload/{id<\d+>}", name="image_upload_to")
      */
-    public function upload(Request $request)
+    public function upload(Request $request, Category $category = null)
     {
         $image = new Image();
+        $options = [];
 
-        $form = $this->createForm(ImageType::class, $image);
+        //upload from eurostep
+        if ($category !== null) {
+            $image->setCategory($category);
+            $options = [
+                'category_disabled' => true,
+                'description' => $request->get('description')
+            ];
+
+        }
+
+        $form = $this->createForm(ImageType::class, $image, $options);
 
         $form->handleRequest($request);
 

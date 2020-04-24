@@ -31,6 +31,7 @@ class ImageType extends AbstractType
                 'class' => Category::class,
                 'placeholder' => 'scegli una categoria',
                 'label' => 'Categoria',
+                'disabled' => $options['category_disabled'],
                 'help' => 'In base alla categoria scelta la foto resterà salvata per un certo numero di giorni',
                 'attr' => [
                     'data-help-message' => $this->helpMessage(),
@@ -53,6 +54,9 @@ class ImageType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => ' Descrizione',
                 'required' => false,
+                'attr' => [
+                    'data-default' => $options['description']
+                ],
                 'help' => 'Descrizione completa della foto, utile anche per una futura ricerca.'
             ])
         ;
@@ -63,11 +67,14 @@ class ImageType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Image::class,
             'image_required' => true,
+            'category_disabled' => false,
+            'description' => "",
         ]);
 
         // you can also define the allowed types, allowed values and
         // any other feature supported by the OptionsResolver component
         $resolver->setAllowedTypes('image_required', 'bool');
+        $resolver->setAllowedTypes('category_disabled', 'bool');
     }
 
     private function helpMessage()
