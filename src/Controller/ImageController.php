@@ -96,9 +96,16 @@ class ImageController extends AbstractController
         //upload from eurostep
         if ($category !== null) {
             $image->setCategory($category);
+            $ordine = $request->get('ordine');
+            $lotto= $request->get('lotto');
+            $ordinelotto = $ordine . "_" .$lotto;
+            $operatore = $request->get('operatore');
+            $note = $request->get('note');
+            $soluzione = $request->get('soluzione');
+
             $options = [
                 'category_disabled' => true,
-                'description' => $request->get('description')
+                'description' => "[$operatore] Ordine: $ordinelotto $note \nSoluzione: $soluzione"
             ];
 
         }

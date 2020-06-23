@@ -24,6 +24,10 @@ $(function() {
             source: engine.ttAdapter()
         },
     });
+
+    let description = $('#image_description');
+    let default_txt = description.attr('data-default');
+    description.val(default_txt);
 });
 
 
