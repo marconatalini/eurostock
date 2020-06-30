@@ -121,6 +121,8 @@ class ImageController extends AbstractController
             $entityManager->persist($image);
             $entityManager->flush();
 
+            $this->addFlash('success', 'La tua foto è stata caricata.');
+
             return $this->redirectToRoute('home');
         }
 
@@ -170,7 +172,7 @@ class ImageController extends AbstractController
         $em->remove($image);
         $em->flush();
 
-//        $this->addFlash('warning', 'DDT cancellato!!');
+        $this->addFlash('warning', 'Foto cancellata.');
 
         return $this->redirectToRoute('home');
     }
