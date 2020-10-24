@@ -15,7 +15,8 @@
             <div class="row m-0">
                 <div class="form-group mr-2">
                     <label for="uploadFromDate">DA </label>
-                    <input type="date" class="form-control" name="uploadFromDate" id="uploadFromDate" value="">
+                    <input type="date" class="form-control" name="uploadFromDate" id="uploadFromDate"
+                           value="{{ date("1 years ago")|date("Y-m-d") }}">
                 </div>
                 <div class="form-group">
                     <label for="uploadToDate">A </label>
@@ -23,6 +24,13 @@
                            value="{{ date()|date("Y-m-d") }}">
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="queryString">Testo ricerca </label>
+                <input type="text" class="form-control" name="queryString" id="queryString"
+                       placeholder="Cerca parole nelle descrizioni" autofocus>
+            </div>
+
             <div class="form-group">
                 <label class="required" for="image_category">Categoria</label>
                 <select id="image_category" name="category" aria-describedby="image_category_help" class="form-control">
@@ -31,11 +39,6 @@
                         <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="queryString">Testo ricerca </label>
-                <input type="text" class="form-control" name="queryString" id="queryString"
-                       placeholder="Cerca parole nelle descrizioni">
             </div>
 
             <div class="form-group">
